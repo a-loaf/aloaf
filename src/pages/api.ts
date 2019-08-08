@@ -1,25 +1,15 @@
-import { ApolloServer, gql } from "apollo-server-micro";
+import { ApolloServer, gql } from 'apollo-server-micro'
 
-const typeDefs = gql`
-  type Query {
-    sayHello: String
-  }
-`;
+import { AuthModule } from '../modules/auth'
 
-const resolvers = {
-  Query: {
-    sayHello(parent, args, context) {
-      return "Hello World!";
-    }
-  }
-};
-
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  modules: [AuthModule]
+})
 
 export const config = {
   api: {
     bodyParser: false
   }
-};
+}
 
-export default server.createHandler({ path: "/api" });
+export default server.createHandler({ path: '/api' })
